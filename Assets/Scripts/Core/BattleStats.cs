@@ -4,12 +4,11 @@ using UnityEngine;
 public class BattleStats : MonoBehaviour
 {
     [SerializeField] private ButtonBase _buttonAttack;
-    [SerializeField] private GameObject _panelSlot;
     [SerializeField] private GameObject _panelWin;
     [SerializeField] private GameObject _panelUpgrade;
-    [SerializeField] private GameObject _panelLose;
 
     [SerializeField] private TextMeshProUGUI[] _resultValueText;
+    [SerializeField] private TextMeshProUGUI _stageText;
 
 
     private int _stage;
@@ -25,6 +24,8 @@ public class BattleStats : MonoBehaviour
                 text.text = $"{_stage}";
 
             Game.Locator.Enemy.InitStats(GetValue(50), GetValue(10), GetValue(5));
+            Game.Locator.Enemy.Ressurection();
+            _stageText.text = $"STAGE {_stage}";
         }
     }
 
@@ -32,25 +33,12 @@ public class BattleStats : MonoBehaviour
     {
         Game.Action.OnWin.AddListener(Win);
         Game.Action.OnStart.AddListener(StartGame);
-        Game.Action.OnLose.AddListener(Lose);
     }
 
     private void StartGame()
     {
         Stage = 1;
-        Game.Locator.Player.InitStats(60, 10, 5);
-    }
-
-    public void Fight()
-    {
-        _panelSlot.SetActive(false);
-        Game.Locator.Player.ApplyDamage();
-
-        if (Game.Locator.Enemy.Health <= 0) return;
-        Game.Locator.Enemy.ApplyDamage();
-
-        if (Game.Locator.Player.Health <= 0) return;
-
+        Game.Locator.Player.InitStats(70, 10, 5);
         _buttonAttack.gameObject.SetActive(true);
     }
 
@@ -58,14 +46,10 @@ public class BattleStats : MonoBehaviour
     {
         _panelUpgrade.SetActive(Stage % 5 != 0);
         _panelWin.SetActive(Stage % 5 == 0);
+        Game.Wallet.Add(Stage % 5 == 0 ? 30 : 5);
     }
 
     public void NextStage() => Stage++;
-
-    private void Lose()
-    {
-        _panelLose.SetActive(true);
-    }
 
     private int GetValue(int value)
     {
@@ -75,6 +59,6 @@ public class BattleStats : MonoBehaviour
 
         float result = baseValue * random * Mathf.Pow(Multiply, stage);
 
-        return _stage == 5 ? (int)(result * 2) : _stage == 10 ? (int)(result * 5) : (int)result;
+        return _stage == 5 ? (int)(result * 2) : _stage == 10 ? (int)(result * 3) : (int)result;
     }
 }

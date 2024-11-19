@@ -5,8 +5,7 @@ public class SpinController : MonoBehaviour
     public static SpinController Instance;
 
     [SerializeField] private GameObject _panelSlot;
-
-    [SerializeField] private ButtonBase _button;
+    [SerializeField] private GameObject _buttonAttack;
     [SerializeField] private Slot[] _slots;
 
     [Space(10)]
@@ -27,17 +26,15 @@ public class SpinController : MonoBehaviour
 
     private void Awake() => Instance = this;
 
-    private void Start() => _button.OnClick.AddListener(Spin);
-
     private void OnEnable()
     {
-        _button.gameObject.SetActive(true);
         foreach (Slot slot in _slots) slot.SetPosition(_offsetVertical);
     }
 
-    private void Spin()
+    public void Spin()
     {
-        _button.gameObject.SetActive(false);
+        _panelSlot.SetActive(true);
+        _buttonAttack.SetActive(false);
 
         float speed = _startSpeed * (Random.value + 1);
         float increaseSpeed = Random.value + 1;
@@ -49,7 +46,7 @@ public class SpinController : MonoBehaviour
         }
     }
 
-    public void SetBuff()
+    public void GetResult()
     {
         bool isActive = true;
 
@@ -58,18 +55,11 @@ public class SpinController : MonoBehaviour
 
         if (!isActive) return;
 
-        foreach (Slot slot in _slots)
-        {
-            switch(slot.Result)
-            {
-                case 0: Game.Wallet.Add(2); break;
-                case 1: Game.Locator.Player.Heal(); break;
-                case 2: Game.Locator.Player.ApplyPercentDefence(); break;
-                case 3: Game.Locator.Player.ApplyPercentDamage(); break;
-                case 4: Game.Locator.Player.ApplyDoubleDamage(); break;
-            }
-        }
-        Game.Locator.Battle.Fight();
+        int[] result = new[] { _slots[0].Result, _slots[1].Result, _slots[2].Result };
+
+        Game.Locator.Controller.ApplyBuff(result);
+
+        _panelSlot.SetActive(false);
     }
 
     private void OnValidate()

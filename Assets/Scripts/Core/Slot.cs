@@ -70,7 +70,7 @@ public class Slot : MonoBehaviour
         }
 
         IsActive = false;
-        SpinController.Instance.SetBuff();
+        SpinController.Instance.GetResult();
     }
 
     private void MoveElement(int index, float speed)
