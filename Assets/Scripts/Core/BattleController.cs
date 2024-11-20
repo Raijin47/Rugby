@@ -3,12 +3,6 @@ using UnityEngine;
 
 public class BattleController : MonoBehaviour
 {
-    [SerializeField] private float _timeHealProcess;
-    [SerializeField] private float _timeAddMoneyProcess;
-    [SerializeField] private float _timeApplyBuffDefence;
-    [SerializeField] private float _timeApplyBuffAttack;
-    [SerializeField] private float _timeApplyDoubleDamage;
-
     private readonly WaitForSeconds Interval = new(1.2f);
 
     private Coroutine _coroutine;
@@ -72,6 +66,7 @@ public class BattleController : MonoBehaviour
         Game.Locator.SkinView.Play(1);
 
         if (Game.Locator.Enemy.Health <= 0) yield break;
+
         yield return Interval;
 
         switch (Random.Range(0, 3))
@@ -99,8 +94,10 @@ public class BattleController : MonoBehaviour
 
         if (Game.Locator.Player.Health <= 0) yield break;
 
+
         yield return Interval;
-        SpinController.Instance.Spin();
+        Game.Locator.AttackButton.SetActive(true);
+        Game.Locator.PauseButton.SetActive(true);
     }
 
     public void Release()

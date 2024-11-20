@@ -51,6 +51,7 @@ public class Game : MonoBehaviour
     }
 
     public void StartGame() => Action.SendStartGame();
+    public void PauseGame(bool pause) => Action.SendPause(pause);
     public void GameOver() => Action.SendGameOver();
     public void Restart() => Action.SendRestart();
     public void AddMoney(int value) => Wallet.Add(value); 

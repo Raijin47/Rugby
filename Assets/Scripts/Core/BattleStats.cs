@@ -5,7 +5,6 @@ public class BattleStats : MonoBehaviour
 {
     [SerializeField] private ButtonBase _buttonAttack;
     [SerializeField] private GameObject _panelWin;
-    [SerializeField] private GameObject _panelUpgrade;
 
     [SerializeField] private TextMeshProUGUI[] _resultValueText;
     [SerializeField] private TextMeshProUGUI _stageText;
@@ -26,6 +25,7 @@ public class BattleStats : MonoBehaviour
             Game.Locator.Enemy.InitStats(GetValue(50), GetValue(10), GetValue(5));
             Game.Locator.Enemy.Ressurection();
             _stageText.text = $"STAGE {_stage}";
+            Game.Locator.TextStage.SetActive(true);
         }
     }
 
@@ -44,7 +44,8 @@ public class BattleStats : MonoBehaviour
 
     private void Win()
     {
-        _panelUpgrade.SetActive(Stage % 5 != 0);
+        Game.Locator.PanelUpgrade.SetActive(Stage % 5 != 0);
+        Game.Locator.TextStage.SetActive(Stage % 5 == 0);
         _panelWin.SetActive(Stage % 5 == 0);
         Game.Wallet.Add(Stage % 5 == 0 ? 30 : 5);
     }

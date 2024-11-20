@@ -5,7 +5,6 @@ public class SpinController : MonoBehaviour
     public static SpinController Instance;
 
     [SerializeField] private GameObject _panelSlot;
-    [SerializeField] private GameObject _buttonAttack;
     [SerializeField] private Slot[] _slots;
 
     [Space(10)]
@@ -34,7 +33,8 @@ public class SpinController : MonoBehaviour
     public void Spin()
     {
         _panelSlot.SetActive(true);
-        _buttonAttack.SetActive(false);
+        Game.Locator.AttackButton.SetActive(false);
+        Game.Locator.PauseButton.SetActive(false);
 
         float speed = _startSpeed * (Random.value + 1);
         float increaseSpeed = Random.value + 1;

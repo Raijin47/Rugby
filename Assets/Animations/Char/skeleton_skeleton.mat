@@ -13,6 +13,7 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _ENABLEENCHANTED_ON
+  - _ENABLEFULLDISTORTION_ON
   - _ENABLEPOISON_ON
   - _ENABLESHIFTING_ON
   - _ENABLETEXTURELAYER2_ON
@@ -191,7 +192,7 @@ Material:
     - _EnableFlame: 0
     - _EnableFrozen: 0
     - _EnableFullAlphaDissolve: 0
-    - _EnableFullDistortion: 0
+    - _EnableFullDistortion: 1
     - _EnableFullGlowDissolve: 0
     - _EnableGaussianBlur: 0
     - _EnableGlitch: 0
@@ -264,7 +265,7 @@ Material:
     - _FrozenSnowDensity: 0.25
     - _FullAlphaDissolveFade: 0.5
     - _FullAlphaDissolveWidth: 0.5
-    - _FullDistortionFade: 1
+    - _FullDistortionFade: 0
     - _FullGlowDissolveFade: 0.5
     - _FullGlowDissolveWidth: 0.5
     - _GaussianBlurFade: 1
